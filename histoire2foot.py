@@ -100,7 +100,12 @@ def equipe_gagnante(match):
     Returns:
         str: le nom de l'équipe gagnante (ou None si match nul)
     """    
-    ...
+    equipe_gagnante=None
+    if match[3]>match[4]:
+        equipe_gagnante=match[1]
+    elif match[3]<match[4]:
+        equipe_gagnante=match[2]
+    return equipe_gagnante
 
 
 def victoire_a_domicile(match):
@@ -112,7 +117,8 @@ def victoire_a_domicile(match):
     Returns:
         bool: True si le match ne se déroule pas en terrain neutre et que l'équipe qui reçoit a gagné
     """    
-    ...
+    return not match[8] and equipe_gagnante==match[1]
+
 
 
 def nb_buts_marques(match):
@@ -124,7 +130,7 @@ def nb_buts_marques(match):
     Returns:
         int: le nombre de buts du match 
     """    
-    ...
+    return match[3]+match[4]
 
 
 def matchs_ville(liste_matchs, ville):
@@ -137,8 +143,11 @@ def matchs_ville(liste_matchs, ville):
     Returns:
         list: la liste des matchs qui se sont déroulé dans la ville ville    
     """
-    ...
-
+    liste_match_ville=[]
+    for i in range(len(liste_matchs)):
+        if liste_matchs[i][6]==ville:
+            liste_match_ville.append(liste_matchs[i])
+    return liste_match_ville
 
 def nombre_moyen_buts(liste_matchs, nom_competition):
     """retourne le nombre moyen de buts marqués par match pour une compétition donnée
