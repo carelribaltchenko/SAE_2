@@ -99,8 +99,9 @@ def test_victoire_a_domicile():
 
 def test_nb_buts_marques():
     # TESTS A COMPLETER
-    ...
-
+    assert histoire2foot.nb_buts_marques(match1) == 6
+    assert histoire2foot.nb_buts_marques(match2) == 3
+    assert histoire2foot.nb_buts_marques(match3) == 1
 def test_matchs_ville():
     assert histoire2foot.matchs_ville(liste1,'Reims') == [('1970-04-28', 'France', 'Romania', 2, 0, 'Friendly', 'Reims', 'France', False)]
     assert histoire2foot.matchs_ville(liste2,'Reims') == []
