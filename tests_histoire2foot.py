@@ -140,7 +140,8 @@ def test_nb_matchs_sans_defaites():
 
 def test_est_bien_trie():
     # TESTS A COMPLETER
-    ...
+    assert histoire2foot.est_bien_trie(liste1)==True
+    assert histoire2foot.est_bien_trie(liste2)==True
 
 def test_fusionner_matchs():
     liste_fus = [('1901-03-09', 'England', 'Northern Ireland', 3, 0, 'British Championship', 'Southampton', 'England', False), 

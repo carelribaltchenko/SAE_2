@@ -179,8 +179,13 @@ def est_bien_trie(liste_matchs):
 
     Returns:
         bool: True si la liste est bien triée et False sinon
-    """    
-    ...
+    """   
+    t1=liste_matchs[0] 
+    for t2 in range(1,len(liste_matchs)):
+        if t1[1]==t2[1] and t1[2]>t2[2] or t1[1]>t2[1]:
+            return False
+        t1=t2
+    return True
 
 
 def fusionner_matchs(liste_matchs1, liste_matchs2):
