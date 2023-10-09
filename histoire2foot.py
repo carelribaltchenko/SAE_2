@@ -212,7 +212,23 @@ def resultats_equipe(liste_matchs, equipe):
     Returns:
         tuple: un triplet d'entiers contenant le nombre de victoires, nuls et défaites de l'équipe
     """    
-    ...
+    vic=0
+    loos=0
+    nul=0
+    res=None
+    for i in range(len(liste_matchs)):
+        if i[3]==equipe or i[4]==equipe and i[5]==i[6]:
+            nul+=1
+        if i[3]==equipe and i[5]>i[6]:
+            loos+=1
+        elif i[3]==equipe and i[5]<i[6]:
+            vic+=1
+        elif i[4]==equipe and i[5]<i[6]:
+            loos+=1
+        elif i[4]==equipe and i[5]>i[6]:
+            vic+=1
+    return vic,nul,loos
+
 
 
 def plus_gros_scores(liste_matchs):
