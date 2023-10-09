@@ -159,7 +159,14 @@ def nombre_moyen_buts(liste_matchs, nom_competition):
     Returns:
         float: le nombre moyen de buts par match pour la compétition
     """
-    ...    
+    cpt=0
+    scr_tot=0
+    for i in len(liste_matchs):
+        if liste_matchs[i][5]==nom_competition:
+            scr_tot+=liste_matchs[i][3]+liste_matchs[i][4]
+            cpt+=1
+    return scr_tot/cpt
+
 
 
 def est_bien_trie(liste_matchs):
