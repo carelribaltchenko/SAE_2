@@ -115,8 +115,8 @@ def test_nombre_moyen_buts():
     assert histoire2foot.nombre_moyen_buts(liste3,'Friendly') == 3.0
 
 def test_resultats_equipe():
-    # TESTS A COMPLETER
     ...
+
 
 def test_plus_gros_scores():
     # TESTS A COMPLETER

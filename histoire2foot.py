@@ -180,11 +180,9 @@ def est_bien_trie(liste_matchs):
     Returns:
         bool: True si la liste est bien triée et False sinon
     """   
-    t1=liste_matchs[0] 
-    for t2 in range(1,len(liste_matchs)):
-        if t1[1]==t2[1] and t1[2]>t2[2] or t1[1]>t2[1]:
+    for i in range(1,len(liste_matchs)):
+        if liste_matchs[1]<liste_matchs[i-1]:
             return False
-        t1=t2
     return True
 
 
@@ -216,16 +214,12 @@ def resultats_equipe(liste_matchs, equipe):
     loos=0
     nul=0
     res=None
-    for i in range(len(liste_matchs)):
+    for i in liste_matchs:
         if i[3]==equipe or i[4]==equipe and i[5]==i[6]:
             nul+=1
-        if i[3]==equipe and i[5]>i[6]:
+        if i[3]==equipe and i[5]>i[6] or i[4]==equipe and i[5]<i[6]:
             loos+=1
-        elif i[3]==equipe and i[5]<i[6]:
-            vic+=1
-        elif i[4]==equipe and i[5]<i[6]:
-            loos+=1
-        elif i[4]==equipe and i[5]>i[6]:
+        elif i[3]==equipe and i[5]<i[6] or i[4]==equipe and i[5]>i[6]:
             vic+=1
     return vic,nul,loos
 
