@@ -12,12 +12,12 @@ match2 = ('1998-07-12', 'France', 'Brazil', 3, 0, 'FIFA World Cup', 'Saint-Denis
 match3 = ('1978-04-05', 'Germany', 'Brazil', 0, 1, 'Friendly', 'Hamburg', 'Germany', False)
 
 # exemples de listes de matchs de foot
-liste1 = [('1970-04-08', 'France', 'Bulgaria', 1, 1, 'Friendly', 'Rouen', 'France', False), 
+liste_matchs1 = [('1970-04-08', 'France', 'Bulgaria', 1, 1, 'Friendly', 'Rouen', 'France', False), 
         ('1970-04-28', 'France', 'Romania', 2, 0, 'Friendly', 'Reims', 'France', False), 
         ('1970-09-05', 'France', 'Czechoslovakia', 3, 0, 'Friendly', 'Nice', 'France', False), 
         ('1970-11-11', 'France', 'Norway', 3, 1, 'UEFA Euro qualification', 'Lyon', 'France', False)
         ]
-liste2 = [('1901-03-09', 'England', 'Northern Ireland', 3, 0, 'British Championship', 'Southampton', 'England', False), 
+liste_matchs2 = [('1901-03-09', 'England', 'Northern Ireland', 3, 0, 'British Championship', 'Southampton', 'England', False), 
         ('1901-03-18', 'England', 'Wales', 6, 0, 'British Championship', 'Newcastle', 'England', False), 
         ('1901-03-30', 'England', 'Scotland', 2, 2, 'British Championship', 'London', 'England', False), 
         ('1902-05-03', 'England', 'Scotland', 2, 2, 'British Championship', 'Birmingham', 'England', False), 
@@ -41,6 +41,7 @@ liste3 = [('1901-03-30', 'Belgium', 'France', 1, 2, 'Friendly', 'Bruxelles', 'Be
         ('1970-09-05', 'France', 'Czechoslovakia', 3, 0, 'Friendly', 'Nice', 'France', False), 
         ('1970-11-11', 'France', 'Norway', 3, 1, 'UEFA Euro qualification', 'Lyon', 'France', False)
         ]
+
 liste4 = [('1978-03-19', 'Argentina', 'Peru', 2, 1, 'Copa Ramón Castilla', 'Buenos Aires', 'Argentina', False), 
         ('1978-03-29', 'Argentina', 'Bulgaria', 3, 1, 'Friendly', 'Buenos Aires', 'Argentina', False), 
         ('1978-04-05', 'Argentina', 'Romania', 2, 0, 'Friendly', 'Buenos Aires', 'Argentina', False), 
@@ -181,10 +182,11 @@ def est_bien_trie(liste_matchs):
         bool: True si la liste est bien triée et False sinon
     """   
     for i in range(1,len(liste_matchs)):
-        if liste_matchs[1]<liste_matchs[i-1]:
+        if liste_matchs[i][0]<liste_matchs[i-1][0] or liste_matchs[i][0]==liste_matchs[i-1][0] and liste_matchs[i][1]<liste_matchs[i-1][1]:
             return False
     return True
 
+print(liste_matchs1[0][1])
 
 def fusionner_matchs(liste_matchs1, liste_matchs2):
     """Fusionne deux listes de matchs triées sans doublons en une liste triée sans doublon
@@ -197,7 +199,52 @@ def fusionner_matchs(liste_matchs1, liste_matchs2):
     Returns:
         list: la liste triée sans doublon comportant tous les matchs de liste_matchs1 et liste_matchs2
     """ 
-    ...
+    l1=0
+    l2=0
+    lf=[]
+    while l1<len(liste_matchs1) and l2<len(liste_matchs2):
+        if liste_matchs1[l1][0]==liste_matchs2[l2][0]:
+            if liste_matchs1[l1][1]<liste_matchs2[l2][1]:
+                if liste_matchs1[l1] in lf:
+                    pass
+                else:
+                    lf.append(liste_matchs1[l1])
+                l1+=1
+            elif liste_matchs1[l1][1]>=liste_matchs2[l2][1]:
+                if liste_matchs2[l2] in lf:
+                    pass
+                else:
+                    lf.append(liste_matchs2[l2])
+                l2+=1
+        elif liste_matchs1[l1][0]<liste_matchs2[l2][0]:
+            if liste_matchs1[l1] in lf:
+                pass
+            else:
+                lf.append(liste_matchs1[l1])
+            l1+=1
+        elif liste_matchs1[l1][0]>liste_matchs2[l2][0]:
+            if liste_matchs2[l2] in lf:
+                pass
+            else:
+                lf.append(liste_matchs2[l2])
+            l2+=1
+    if l1==len(liste_matchs1):
+        for i in range(l2, len(liste_matchs2)):
+            if liste_matchs2[i] in lf:
+                pass
+            else:
+                lf.append(liste_matchs2[i])
+    else:
+        for i in range(l1, len(liste_matchs1)):
+            if liste_matchs1[i] in lf:
+                pass
+            else:
+                lf.append(liste_matchs1[i])
+    return lf
+        
+
+print(fusionner_matchs(liste_matchs1, liste_matchs2))
+
 
 
 def resultats_equipe(liste_matchs, equipe):
@@ -247,7 +294,16 @@ def liste_des_equipes(liste_matchs):
     Returns:
         list: une liste de str contenant le noms des équipes ayant jouer des matchs
     """
-    ...
+    lf=[]
+    for i in range(len(liste_matchs)):
+        if liste_matchs[i][1] in lf or liste_matchs[i][2]:
+            pass
+        else:
+            if liste_matchs[i][1] not in lf:
+                lf.append(liste_matchs[i][1])
+            elif liste_matchs[i][2] not in lf:
+                lf.append(liste_matchs[i][2])
+    return lf
 
 
 def premiere_victoire(liste_matchs, equipe):

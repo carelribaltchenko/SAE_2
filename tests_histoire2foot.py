@@ -174,3 +174,18 @@ def test_sauver_charger_matchs():
     ...
 
 # ajouter les tests manquants
+
+test_equipe_gagnante()
+test_est_bien_trie()
+test_fusionner_matchs()
+test_liste_des_equipes()
+test_matchs_ville()
+test_nb_buts_marques()
+test_nb_matchs_sans_defaites()
+test_nombre_moyen_buts()
+test_plus_gros_scores()
+test_premiere_victoire()
+test_resultats_equipe()
+test_equipe_gagnante()
+test_sauver_charger_matchs()
+test_victoire_a_domicile()
