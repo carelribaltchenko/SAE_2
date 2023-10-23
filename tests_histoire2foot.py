@@ -115,12 +115,18 @@ def test_nombre_moyen_buts():
     assert histoire2foot.nombre_moyen_buts(liste3,'Friendly') == 3.0
 
 def test_resultats_equipe():
-    ...
+    assert histoire2foot.resultats_equipe(liste1, 'France')==(3,1,0)
+    assert histoire2foot.resultats_equipe(liste2, 'England')==(10,5,1)
+    assert histoire2foot.resultats_equipe(liste4, 'Toto')==(0,0,0)
 
 
 def test_plus_gros_scores():
     # TESTS A COMPLETER
-    ...
+    assert histoire2foot.plus_gros_scores(liste1)==[('1970-09-05', 'France', 'Czechoslovakia', 3, 0, 'Friendly', 'Nice', 'France', False)]
+    assert histoire2foot.plus_gros_scores(liste2)==[('1901-03-18', 'England', 'Wales', 6, 0, 'British Championship', 'Newcastle', 'England', False)]
+    assert histoire2foot.plus_gros_scores(liste3)==[('1903-04-04', 'Brazil', 'Argentina', 3, 0, 'Friendly', 'Sao Paulo', 'Brazil', False), ('1970-09-05', 'France', 'Czechoslovakia', 3, 0, 'Friendly', 'Nice', 'France', False)]
+
+
 
 def test_liste_des_equipes():
     res=histoire2foot.liste_des_equipes(liste1)
@@ -132,11 +138,15 @@ def test_liste_des_equipes():
 
 def test_premiere_victoire():
     # TESTS A COMPLETER
-    ...
+    assert histoire2foot.premiere_victoire(liste1, 'France')=='1970-04-28'
+    assert histoire2foot.premiere_victoire(liste2, 'Wales')==None
+    assert not histoire2foot.premiere_victoire(liste4, 'Tunisia')=='1978-06-06'
     
 def test_nb_matchs_sans_defaites():
     # TESTS A COMPLETER
-    ...
+    assert histoire2foot.nb_matchs_sans_defaites(liste1, 'France')==3
+    assert histoire2foot.nb_matchs_sans_defaites(liste2, 'England')==3
+    assert histoire2foot.nb_matchs_sans_defaites(liste4, 'Toto')==0
 
 def test_est_bien_trie():
     # TESTS A COMPLETER
@@ -175,6 +185,15 @@ def test_sauver_charger_matchs():
 
 # ajouter les tests manquants
 
+def test_plus_de_victoire_que_defaite():
+    assert histoire2foot.plus_de_victoires_que_defaites(liste1, 'France')==True
+    assert histoire2foot.plus_de_victoires_que_defaites(liste3, 'Norway')==False
+    assert histoire2foot.plus_de_victoires_que_defaites(liste4, 'Toto')==False
+
+
+
+
+test_plus_de_victoire_que_defaite()
 test_equipe_gagnante()
 test_est_bien_trie()
 test_fusionner_matchs()

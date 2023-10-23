@@ -118,7 +118,7 @@ def victoire_a_domicile(match):
     Returns:
         bool: True si le match ne se déroule pas en terrain neutre et que l'équipe qui reçoit a gagné
     """    
-    return not match[8] and equipe_gagnante==match[1]
+    return not match[8] and equipe_gagnante(match)==match[1]
 
 
 
@@ -145,9 +145,9 @@ def matchs_ville(liste_matchs, ville):
         list: la liste des matchs qui se sont déroulé dans la ville ville    
     """
     liste_match_ville=[]
-    for i in range(len(liste_matchs)):
-        if liste_matchs[i][6]==ville:
-            liste_match_ville.append(liste_matchs[i])
+    for matchs in liste_matchs:
+        if matchs[6]==ville:
+            liste_match_ville.append(matchs)
     return liste_match_ville
 
 def nombre_moyen_buts(liste_matchs, nom_competition):
@@ -162,9 +162,9 @@ def nombre_moyen_buts(liste_matchs, nom_competition):
     """
     cpt=0
     scr_tot=0
-    for i in len(liste_matchs):
-        if liste_matchs[i][5]==nom_competition:
-            scr_tot+=liste_matchs[i][3]+liste_matchs[i][4]
+    for matchs in liste_matchs:
+        if matchs[5]==nom_competition:
+            scr_tot+=matchs[3]+matchs[4]
             cpt+=1
     return scr_tot/cpt
 
@@ -186,7 +186,6 @@ def est_bien_trie(liste_matchs):
             return False
     return True
 
-print(liste_matchs1[0][1])
 
 def fusionner_matchs(liste_matchs1, liste_matchs2):
     """Fusionne deux listes de matchs triées sans doublons en une liste triée sans doublon
@@ -243,7 +242,6 @@ def fusionner_matchs(liste_matchs1, liste_matchs2):
     return lf
         
 
-print(fusionner_matchs(liste_matchs1, liste_matchs2))
 
 
 
@@ -260,16 +258,16 @@ def resultats_equipe(liste_matchs, equipe):
     vic=0
     loos=0
     nul=0
-    res=None
     for i in liste_matchs:
-        if i[3]==equipe or i[4]==equipe and i[5]==i[6]:
+        if i[1]==equipe and i[3]==i[4] or i[2]==equipe and i[3]==i[4]:
             nul+=1
-        if i[3]==equipe and i[5]>i[6] or i[4]==equipe and i[5]<i[6]:
-            loos+=1
-        elif i[3]==equipe and i[5]<i[6] or i[4]==equipe and i[5]>i[6]:
+        elif i[1]==equipe and i[3]>i[4] or i[2]==equipe and i[3]<i[4]:
             vic+=1
+        elif i[1]==equipe and i[3]<i[4] or i[2]==equipe and i[3]>i[4]:
+            loos+=1
     return vic,nul,loos
 
+print(resultats_equipe(liste_matchs2, 'England'))
 
 
 def plus_gros_scores(liste_matchs):
@@ -281,7 +279,18 @@ def plus_gros_scores(liste_matchs):
     Returns:
         list: la liste des matchs avec le plus grand écart entre vainqueur et perdant
     """    
-    ...
+    lf=[]
+    valeur=0
+    for matchs in liste_matchs:
+        if abs(matchs[3]-matchs[4]) == valeur:
+            lf.append(matchs)
+        elif abs(matchs[3]-matchs[4]) > valeur:
+            lf.clear()
+            valeur = abs(matchs[3]-matchs[4])
+            lf.append(matchs)
+    return lf
+
+
 
 
 def liste_des_equipes(liste_matchs):
@@ -295,14 +304,11 @@ def liste_des_equipes(liste_matchs):
         list: une liste de str contenant le noms des équipes ayant jouer des matchs
     """
     lf=[]
-    for i in range(len(liste_matchs)):
-        if liste_matchs[i][1] in lf or liste_matchs[i][2]:
-            pass
-        else:
-            if liste_matchs[i][1] not in lf:
-                lf.append(liste_matchs[i][1])
-            elif liste_matchs[i][2] not in lf:
-                lf.append(liste_matchs[i][2])
+    for matchs in liste_matchs:
+        if matchs[1] not in lf:
+            lf.append(matchs[1])
+        if matchs[2] not in lf:
+            lf.append(matchs[2])
     return lf
 
 
@@ -315,8 +321,13 @@ def premiere_victoire(liste_matchs, equipe):
 
     Returns:
         str: la date de la première victoire de l'equipe
-    """    
-    ...
+    """
+    for matchs in liste_matchs:
+        if equipe_gagnante(matchs)==equipe:
+            return matchs[0]
+    return None
+
+
 
 
 def nb_matchs_sans_defaites(liste_matchs, equipe):
@@ -329,7 +340,17 @@ def nb_matchs_sans_defaites(liste_matchs, equipe):
     Returns:
         int: le plus grand nombre de matchs consécutifs sans défaite du pays nom_pays
     """
-    ...
+    res_a=0
+    res_f=0
+    for matchs in liste_matchs:
+        if equipe in matchs and equipe_gagnante(matchs)==equipe:
+            res_a+=1
+        elif equipe in matchs and equipe_gagnante(matchs)!= equipe:
+            res_a=0
+        if res_a>res_f:
+            res_f=res_a
+    return res_f
+            
 
 
 def charger_matchs(nom_fichier):
@@ -369,7 +390,7 @@ def plus_de_victoires_que_defaites(liste_matchs, equipe):
     Returns:
         bool: True si l'equipe a obtenu plus de victoires que de défaites
     """
-    ...
+    return resultats_equipe(liste_matchs, equipe)[0]>resultats_equipe(liste_matchs, equipe)[2]
 
 
 def matchs_spectaculaires(liste_matchs):
@@ -382,7 +403,10 @@ def matchs_spectaculaires(liste_matchs):
     Returns:
         list: la liste des matchs les plus spectaculaires
     """
-    ...
+    lf=[]
+    
+    for matchs in liste_matchs:
+
 
 
 def meilleures_equipes(liste_matchs):
@@ -395,8 +419,4 @@ def meilleures_equipes(liste_matchs):
         list: la liste des équipes qui ont le plus petit nombre de defaites
     """
     ...
-
-
-
-
 
