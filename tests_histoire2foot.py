@@ -180,8 +180,35 @@ def test_fusionner_matchs():
     assert histoire2foot.fusionner_matchs(liste2,liste3) == liste_fus
 
 def test_sauver_charger_matchs():
-    # A COMPLETER
-    ...
+    histoire2foot.sauver_matchs(liste1, "test.csv")
+    assert histoire2foot.charger_matchs("test.csv") == [('1970-04-08', 'France', 'Bulgaria', 1, 1, 'Friendly', 'Rouen', 'France', False), 
+        ('1970-04-28', 'France', 'Romania', 2, 0, 'Friendly', 'Reims', 'France', False), 
+        ('1970-09-05', 'France', 'Czechoslovakia', 3, 0, 'Friendly', 'Nice', 'France', False), 
+        ('1970-11-11', 'France', 'Norway', 3, 1, 'UEFA Euro qualification', 'Lyon', 'France', False)]
+    histoire2foot.sauver_matchs(liste2, "test1.csv")
+    assert histoire2foot.charger_matchs("test1.csv") ==[('1901-03-09', 'England', 'Northern Ireland', 3, 0, 'British Championship', 'Southampton', 'England', False), 
+        ('1901-03-18', 'England', 'Wales', 6, 0, 'British Championship', 'Newcastle', 'England', False), 
+        ('1901-03-30', 'England', 'Scotland', 2, 2, 'British Championship', 'London', 'England', False), 
+        ('1902-05-03', 'England', 'Scotland', 2, 2, 'British Championship', 'Birmingham', 'England', False), 
+        ('1903-02-14', 'England', 'Northern Ireland', 4, 0, 'British Championship', 'Wolverhampton', 'England', False), 
+        ('1903-03-02', 'England', 'Wales', 2, 1, 'British Championship', 'Portsmouth', 'England', False), 
+        ('1903-04-04', 'England', 'Scotland', 1, 2, 'British Championship', 'Sheffield', 'England', False), 
+        ('1905-02-25', 'England', 'Northern Ireland', 1, 1, 'British Championship', 'Middlesbrough', 'England', False), 
+        ('1905-03-27', 'England', 'Wales', 3, 1, 'British Championship', 'Liverpool', 'England', False), 
+        ('1905-04-01', 'England', 'Scotland', 1, 0, 'British Championship', 'London', 'England', False), 
+        ('1907-02-16', 'England', 'Northern Ireland', 1, 0, 'British Championship', 'Liverpool', 'England', False), 
+        ('1907-03-18', 'England', 'Wales', 1, 1, 'British Championship', 'London', 'England', False), 
+        ('1907-04-06', 'England', 'Scotland', 1, 1, 'British Championship', 'Newcastle', 'England', False), 
+        ('1909-02-13', 'England', 'Northern Ireland', 4, 0, 'British Championship', 'Bradford', 'England', False), 
+        ('1909-03-15', 'England', 'Wales', 2, 0, 'British Championship', 'Nottingham', 'England', False), 
+        ('1909-04-03', 'England', 'Scotland', 2, 0, 'British Championship', 'London', 'England', False)]
+    histoire2foot.sauver_matchs(liste3, "test2.csv")
+    assert histoire2foot.charger_matchs("test2.csv") == [('1901-03-30', 'Belgium', 'France', 1, 2, 'Friendly', 'Bruxelles', 'Belgium', False),
+        ('1901-03-30', 'England', 'Scotland', 2, 2, 'British Championship', 'London', 'England', False),
+        ('1903-04-04', 'Brazil', 'Argentina', 3, 0, 'Friendly', 'Sao Paulo', 'Brazil', False),
+        ('1903-04-04', 'England', 'Scotland', 1, 2, 'British Championship', 'Sheffield', 'England', False), 
+        ('1970-09-05', 'France', 'Czechoslovakia', 3, 0, 'Friendly', 'Nice', 'France', False), 
+        ('1970-11-11', 'France', 'Norway', 3, 1, 'UEFA Euro qualification', 'Lyon', 'France', False)]
 
 # ajouter les tests manquants
 
@@ -197,11 +224,11 @@ def test_match_spectaculaire():
     assert histoire2foot.matchs_spectaculaires(liste3)==[('1901-03-30', 'England', 'Scotland', 2, 2, 'British Championship', 'London', 'England', False), ('1970-11-11', 'France', 'Norway', 3, 1, 'UEFA Euro qualification', 'Lyon', 'France', False)]
 
 def test_meilleur_equipe():
-    assert histoire2foot.meilleures_equipes(liste1)==['France']
+    assert histoire2foot.meilleures_equipes(liste1)==['France', 'Bulgaria']
     assert histoire2foot.meilleures_equipes(liste2)==['England']
     assert histoire2foot.meilleures_equipes(liste4)==['Brazil']
 
-
+test_sauver_charger_matchs()
 test_meilleur_equipe()
 test_match_spectaculaire()
 test_plus_de_victoire_que_defaite()

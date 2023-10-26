@@ -256,7 +256,7 @@ def resultats_equipe(liste_matchs, equipe):
             loos+=1
     return vic,nul,loos
 
-print(resultats_equipe(liste_matchs2, 'England'))
+
 
 
 def plus_gros_scores(liste_matchs):
@@ -363,7 +363,7 @@ def charger_matchs(nom_fichier):
     fic.close()
     return liste
 
-print(charger_matchs("histoire2.csv"))
+
 
 def sauver_matchs(liste_matchs,nom_fichier):
     """sauvegarde dans un fichier au format CSV une liste de matchs
@@ -443,5 +443,3 @@ def meilleures_equipes(liste_matchs):
     return lf
 
 
-print(meilleures_equipes(liste_matchs2))
-print(meilleures_equipes(liste4))
