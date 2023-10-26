@@ -191,8 +191,19 @@ def test_plus_de_victoire_que_defaite():
     assert histoire2foot.plus_de_victoires_que_defaites(liste4, 'Toto')==False
 
 
+def test_match_spectaculaire():
+    assert histoire2foot.matchs_spectaculaires(liste1)==[('1970-11-11', 'France', 'Norway', 3, 1, 'UEFA Euro qualification', 'Lyon', 'France', False)]
+    assert histoire2foot.matchs_spectaculaires(liste2)==[('1901-03-18', 'England', 'Wales', 6, 0, 'British Championship', 'Newcastle', 'England', False)]
+    assert histoire2foot.matchs_spectaculaires(liste3)==[('1901-03-30', 'England', 'Scotland', 2, 2, 'British Championship', 'London', 'England', False), ('1970-11-11', 'France', 'Norway', 3, 1, 'UEFA Euro qualification', 'Lyon', 'France', False)]
+
+def test_meilleur_equipe():
+    assert histoire2foot.meilleures_equipes(liste1)==['France']
+    assert histoire2foot.meilleures_equipes(liste2)==['England']
+    assert histoire2foot.meilleures_equipes(liste4)==['Brazil']
 
 
+test_meilleur_equipe()
+test_match_spectaculaire()
 test_plus_de_victoire_que_defaite()
 test_equipe_gagnante()
 test_est_bien_trie()

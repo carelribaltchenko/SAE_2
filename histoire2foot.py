@@ -1,3 +1,4 @@
+import csv
 """Fichier source de la SAE 1.01 partie 1
     Historique des matchs de football internationaux
     """
@@ -204,40 +205,28 @@ def fusionner_matchs(liste_matchs1, liste_matchs2):
     while l1<len(liste_matchs1) and l2<len(liste_matchs2):
         if liste_matchs1[l1][0]==liste_matchs2[l2][0]:
             if liste_matchs1[l1][1]<liste_matchs2[l2][1]:
-                if liste_matchs1[l1] in lf:
-                    pass
-                else:
+                if liste_matchs1[l1] not in lf:
                     lf.append(liste_matchs1[l1])
                 l1+=1
             elif liste_matchs1[l1][1]>=liste_matchs2[l2][1]:
-                if liste_matchs2[l2] in lf:
-                    pass
-                else:
+                if liste_matchs2[l2] not in lf:
                     lf.append(liste_matchs2[l2])
                 l2+=1
         elif liste_matchs1[l1][0]<liste_matchs2[l2][0]:
-            if liste_matchs1[l1] in lf:
-                pass
-            else:
+            if liste_matchs1[l1] not in lf:
                 lf.append(liste_matchs1[l1])
             l1+=1
         elif liste_matchs1[l1][0]>liste_matchs2[l2][0]:
-            if liste_matchs2[l2] in lf:
-                pass
-            else:
+            if liste_matchs2[l2] not in lf:
                 lf.append(liste_matchs2[l2])
             l2+=1
     if l1==len(liste_matchs1):
         for i in range(l2, len(liste_matchs2)):
-            if liste_matchs2[i] in lf:
-                pass
-            else:
+            if liste_matchs2[i] not in lf:
                 lf.append(liste_matchs2[i])
     else:
         for i in range(l1, len(liste_matchs1)):
-            if liste_matchs1[i] in lf:
-                pass
-            else:
+            if liste_matchs1[i] not in lf:
                 lf.append(liste_matchs1[i])
     return lf
         
@@ -362,8 +351,19 @@ def charger_matchs(nom_fichier):
     Returns:
         list: la liste des matchs du fichier
     """    
-    ...
+    liste = []
+    fic = open(nom_fichier, 'r')
+    fic.readline()
+    for ligne in fic :
+        ligne = ligne.split(",")
+        if "F" in ligne[8] :
+            liste.append((ligne[0], ligne[1], ligne[2], int(ligne[3]), int(ligne[4]), ligne[5], ligne[6], ligne[7], False))
+        if "T" in ligne[8] :
+            liste.append((ligne[0], ligne[1], ligne[2], int(ligne[3]), int(ligne[4]), ligne[5], ligne[6], ligne[7], True))
+    fic.close()
+    return liste
 
+print(charger_matchs("histoire2.csv"))
 
 def sauver_matchs(liste_matchs,nom_fichier):
     """sauvegarde dans un fichier au format CSV une liste de matchs
@@ -375,7 +375,11 @@ def sauver_matchs(liste_matchs,nom_fichier):
     Returns:
         None: cette fonction ne retourne rien
     """    
-    ...
+    fic = open(nom_fichier, 'w')
+    fic.write("date,home_team,away_team,home_score,away_score,tournament,city,country,neutral\n")
+    for match in liste_matchs :
+        fic.write(match[0]+","+match[1]+","+match[2]+","+str(match[3])+","+str(match[4])+","+match[5]+","+match[6]+","+match[7]+","+str(match[8])+"\n")
+    fic.close()
 
 
 # Fonctions à implémenter dont il faut également implémenter les tests
@@ -404,8 +408,16 @@ def matchs_spectaculaires(liste_matchs):
         list: la liste des matchs les plus spectaculaires
     """
     lf=[]
-    
+    nb_tot=0
     for matchs in liste_matchs:
+        nb_ac=matchs[3]+matchs[4]
+        if nb_ac>nb_tot:
+            lf.clear()
+            lf.append(matchs)
+            nb_tot=nb_ac
+        elif nb_ac==nb_tot:
+            lf.append(matchs)
+    return lf
 
 
 
@@ -418,5 +430,18 @@ def meilleures_equipes(liste_matchs):
     Returns:
         list: la liste des équipes qui ont le plus petit nombre de defaites
     """
-    ...
+    lf=[]
+    loos_equipe=resultats_equipe(liste_matchs, liste_matchs[0][1], )[2]
+    for equipe in liste_des_equipes(liste_matchs):
+        loos_ac=resultats_equipe(liste_matchs,equipe)[2]
+        if loos_ac<loos_equipe:
+            lf.clear()
+            lf.append(equipe)
+            loos_equipe=loos_ac
+        elif loos_equipe==loos_ac:
+            lf.append(equipe)
+    return lf
 
+
+print(meilleures_equipes(liste_matchs2))
+print(meilleures_equipes(liste4))
